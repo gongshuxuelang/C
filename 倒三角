@@ -1,0 +1,45 @@
+#include <iostream>
+#include <deque>
+#include <string>
+#include <iterator>
+class TRIANGLE
+{
+public:
+	void Triangle_Scanf();	
+	void Triangle_Algorithm();
+private:
+	int Trangle_value;
+	std::deque<std::string> V;
+	std::deque<std::string>::iterator pos;
+};
+void TRIANGLE::Triangle_Algorithm()
+{
+	for (int j = Trangle_value; j > 0; j--)
+	{
+		for (int i = 2 * j - 1; i > 0; i--)
+		{
+			V.push_back("#");
+		}
+		for (int k = j;k < Trangle_value;k++)
+		{
+			V.push_front(" ");
+		}
+		for (pos = V.begin();pos != V.end();++pos)
+		{
+			std::cout << *pos;
+		}
+		V.clear();
+		std::cout << std::endl;
+	}
+}
+void TRIANGLE::Triangle_Scanf()
+{
+	std::cin >> Trangle_value;
+}
+int main()
+{
+	TRIANGLE trangle;
+	trangle.Triangle_Scanf();
+	trangle.Triangle_Algorithm();	
+	return 0;
+}
