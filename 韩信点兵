@@ -1,0 +1,51 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+class HANXIN
+{
+public:
+	void algorithm_HX();
+	void show();
+	void scanf_HX();
+private:
+	int HX_People, Three_People, Five_People, Seven_People, value_flag;	
+};
+void HANXIN::scanf_HX()
+{
+	std::cin >> Three_People >> Five_People >> Seven_People;	
+}
+void HANXIN::algorithm_HX()
+{
+	for (int i = 10; i < 100; i++)
+	{
+		if (i % 3 == Three_People && i % 5 == Five_People && i % 7 == Seven_People)
+		{
+			HX_People = i;
+			value_flag = 1;
+			break;
+		}
+		else
+		{
+			value_flag = 0;
+		}
+	}
+}
+void HANXIN::show()
+{
+	if (value_flag == 1)
+	{		//人数真确输出
+		std::cout << "Case 1: " << HX_People << std::endl;
+	}
+	else if (value_flag == 0)
+	{		//人数错误输出
+		std::cout << "Case 2: No answer" << std::endl;
+	}
+}
+int main()
+{
+	HANXIN hanxin;
+	hanxin.scanf_HX();
+	hanxin.algorithm_HX();
+	hanxin.show();
+	return 0;
+}
