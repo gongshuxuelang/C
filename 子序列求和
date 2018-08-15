@@ -1,0 +1,63 @@
+#pragma once
+class SUBSEQUENCE
+{
+public:
+	SUBSEQUENCE();
+	~SUBSEQUENCE();
+	void show();
+	void scanf_sub();
+	void algorithm();
+private:
+	int n, m;
+	double sum;
+};
+
+
+
+#include "SUBSEQUENCE.h"
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+SUBSEQUENCE::SUBSEQUENCE()
+{
+	sum = 0;
+}
+
+
+SUBSEQUENCE::~SUBSEQUENCE()
+{
+}
+void SUBSEQUENCE::algorithm()
+{
+	for (int i = n; i <= m; i++)
+	{
+		sum += 1.0 / (pow(double(i),2));
+	}
+}
+void SUBSEQUENCE::show()
+{	
+	std::cout << "Case 1: " << std::setprecision(5) << sum << std::endl;
+}
+void SUBSEQUENCE::scanf_sub()
+{
+	std::cin >> n >> m;
+	while ((0 >= n) || (n >= m))
+	{
+		std::cout << "你输入的数据有误，请重新输入！" << std::endl;
+		std::cin >> n >> m;
+	}	
+}
+
+
+
+#include "SUBSEQUENCE.h"
+
+int main()
+{
+	SUBSEQUENCE sub1;
+	sub1.scanf_sub();
+	sub1.algorithm();
+	sub1.show();
+	return 0;
+}
