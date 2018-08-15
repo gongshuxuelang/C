@@ -1,0 +1,52 @@
+#include <iostream>
+#include <iomanip>
+class DECIMAL
+{
+public:
+	DECIMAL();
+	void DEC_show();
+	void DEC_scanf();
+	void DEC_algoithm();
+	~DECIMAL()
+	{		
+	}
+private:
+	int a, b, c;
+	double sum;
+};
+DECIMAL::DECIMAL()
+{
+	sum = 0;
+}
+void DECIMAL::DEC_algoithm()
+{
+	while (true)
+	{
+		DEC_scanf();
+		sum = (double(a)) / (double(b));
+		DEC_show();
+	}
+}
+void DECIMAL::DEC_show()
+{
+	std::cout << "Case 1： " << std::setprecision(c)<< sum << std::endl;
+}
+void DECIMAL::DEC_scanf()
+{
+	std::cin >> a >> b >> c;
+	while ((a != 0) && (b == 0))
+	{
+		std::cout << "你输入的b是错误的！" << std::endl;
+		std::cin >> b;
+	}
+	if ((a == 0) && (b == 0) && (c == 0))
+	{
+		exit(0);
+	}
+}
+int main()
+{
+	DECIMAL dec;
+	dec.DEC_algoithm();
+	return 0;
+}
