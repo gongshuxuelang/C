@@ -1,0 +1,176 @@
+#include <iostream>
+
+template<typename T>
+struct ListNode
+{
+	T val;
+	struct ListNode * next;
+};
+typedef struct ListNode<int>* pListNodeI;
+typedef struct ListNode<int> ListNodeI;
+pListNodeI Create_list(int n);//创建链表
+void traverse_list(pListNodeI pHead);//遍历链表
+bool is_empty(pListNodeI pHead);//判断链表是否为空
+int length_list(pListNodeI pHead);//求链表的长度
+bool insert_list(pListNodeI pHead, int site, int val);//插入节点
+int delete_list(pListNodeI pHead, int site);//删除节点
+void sort_list(pListNodeI pHead,int n);//排序
+
+
+int main()
+{
+	int n = 0;
+	std::cout << "请输入链表的长度" << std::endl;
+	std::cin >> n;
+	auto pHead = Create_list(n);
+	traverse_list(pHead);
+	std::cout << "链表长度为：" <<length_list(pHead) << std::endl;
+	insert_list(pHead,1,10);
+	traverse_list(pHead);
+	std::cout << "链表长度为：" << length_list(pHead) << std::endl;
+	
+	std::cout << "删除的数据为：" << delete_list(pHead, 4) << std::endl;
+	traverse_list(pHead);
+	std::cout << "链表长度为：" << length_list(pHead) << std::endl;
+
+	sort_list(pHead,1);
+	traverse_list(pHead);
+	std::cout << "链表长度为：" << length_list(pHead) << std::endl;
+	system("pause");
+	return 0;
+}
+void sort_list(pListNodeI pHead,int n)
+{
+	auto l1 = pHead->next;	
+	auto num = pHead->next -> val;
+
+	if (n == 0)
+	{
+		while (l1 != nullptr)
+		{
+			auto temp = l1->next;
+			while (temp != nullptr)
+			{
+				if (l1->val > temp->val)
+				{
+					num = l1->val;
+					l1->val = temp->val;
+					temp->val = num;
+				}
+				temp = temp->next;
+			}
+			l1 = l1->next;
+		}
+	}
+	else
+	{
+		while (l1 != nullptr)
+		{
+			auto temp = l1->next;
+			while (temp != nullptr)
+			{
+				if (l1->val < temp->val)
+				{
+					num = l1->val;
+					l1->val = temp->val;
+					temp->val = num;
+				}
+				temp = temp->next;
+			}
+			l1 = l1->next;
+		}
+	}
+	
+
+
+}
+int delete_list(pListNodeI pHead, int site)
+{
+	int val = 0;
+	for (int i = 0; i < site; ++i)
+	{
+		pHead = pHead->next;
+	}
+	auto denode = pHead->next;
+	val = denode->val;
+	pHead->next = pHead->next->next;
+	free(denode);
+	return val;
+}
+bool insert_list(pListNodeI pHead, int site, int val)
+{
+	for (int i = 0; i < site; ++i)
+	{
+		pHead = pHead->next;
+	}
+	pListNodeI Node = (pListNodeI)malloc(sizeof(ListNodeI));
+	Node->val = val;
+	Node->next = pHead->next;
+	pHead->next = Node;
+
+	return true;
+}
+int length_list(pListNodeI pHead)
+{
+	int i = 0;
+	while (pHead->next != nullptr)
+	{
+		pHead = pHead->next;
+		i++;
+	}
+	return i;
+}
+bool is_empty(pListNodeI pHead)
+{
+	if (pHead->next == nullptr)
+	{
+		return true;
+	}
+	return false;
+}
+void traverse_list(pListNodeI pHead)
+{
+	while (pHead->next != nullptr)
+	{
+		pHead = pHead->next;
+		std::cout << pHead->val << " ";
+
+	}
+	std::cout << std::endl;
+	return;
+}
+pListNodeI Create_list(int n)
+{
+	int num = 0;
+	pListNodeI l1 = (pListNodeI)malloc(sizeof(ListNodeI));
+	auto temp = l1;
+	if (n <= 0)
+	{
+		printf("你输入的联保长度有误！\n");
+		exit(-1);
+	}
+	if (l1->next == nullptr)
+	{
+		printf("分配失败！\n");
+		exit(-1);
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		std::cout << "请输入链表数值：" << std::endl;
+		std::cin >> num;
+
+		auto pNew = (pListNodeI)malloc(sizeof(ListNodeI));
+		if (pNew == nullptr)
+		{
+			printf("申请内存失败！\n");
+			exit(-1);
+		}
+
+		pNew-> val = num;
+		temp->next = pNew;
+		pNew->next = nullptr;
+		temp = pNew;
+		
+	}	
+	return l1;
+}
