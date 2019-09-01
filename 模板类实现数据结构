@@ -1,0 +1,169 @@
+#include <iostream>
+
+
+template<typename T>
+class ListNode
+{
+public:
+	T  val;
+	class ListNode* next;
+};
+
+typedef class ListNode<int>* pListNodeI;
+typedef class ListNode<int> ListNodeI;
+class FunlistNode
+{
+public:
+	pListNodeI creatlist(int n);//创建链表
+	void traverse_list(pListNodeI pHead);//遍历链表
+	bool is_empty(pListNodeI pHead);//判断链表是否为空
+	int length_list(pListNodeI pHead);//求链表的长度
+	bool insert_list(pListNodeI pHead, int site, int val);//插入节点
+	int delete_list(pListNodeI pHead, int site);//删除节点
+	void sort_list(pListNodeI pHead, int n);//排序
+};
+
+int main()
+{
+	int n = 0;
+	std::cout << "请出入创建链表的长度：" << std::endl;
+	std::cin >> n;
+
+	if (n <= 0)
+	{
+		std::cout << "你输入的数字不对：" << std::endl;
+		exit(-1);
+	}
+
+	FunlistNode fln;
+	pListNodeI pHead = fln.creatlist(n);
+	fln.traverse_list(pHead);
+	std::cout << "链表长度为：" << fln.length_list(pHead) << std::endl;
+	fln.insert_list(pHead,3,10);
+	fln.traverse_list(pHead);
+	std::cout << "链表长度为：" << fln.length_list(pHead) << std::endl;
+	fln.delete_list(pHead,2);
+	fln.traverse_list(pHead);
+	std::cout << "链表长度为：" << fln.length_list(pHead) << std::endl;
+	fln.sort_list(pHead,1);
+	fln.traverse_list(pHead);
+	std::cout << "链表长度为：" << fln.length_list(pHead) << std::endl;
+	system("pause");
+	return 0;
+}
+void FunlistNode::sort_list(pListNodeI pHead, int n)
+{
+	auto num = pHead->next->val;
+	auto temp = pHead;
+	temp = temp->next;
+	if (n == 0)
+	{
+		while (temp != nullptr)
+		{			
+			auto l1 = temp->next;
+			while (l1 != nullptr)
+			{
+				if (temp->val > l1->val)
+				{
+					num = l1->val;
+					l1->val = temp->val;
+					temp->val = num;
+				}
+				l1 = l1->next;
+			}
+			temp = temp->next;
+		}
+	}
+	else
+	{
+		while (temp != nullptr)
+		{
+			auto l1 = temp->next;
+			while (l1 != nullptr)
+			{
+				if (temp->val < l1->val)
+				{
+					num = l1->val;
+					l1->val = temp->val;
+					temp->val = num;
+				}
+				l1 = l1->next;
+			}
+			temp = temp->next;
+		}
+	}
+}
+int FunlistNode::delete_list(pListNodeI pHead, int site)
+{
+	int n = 0;
+	pListNodeI pNew = nullptr;
+	while (site--)
+	{
+		pHead = pHead->next;
+	}
+	pNew = pHead->next;
+	pHead->next = pHead->next->next;
+	n = pNew->val;
+	free(pNew);
+	return n;
+}
+bool FunlistNode::insert_list(pListNodeI pHead, int site, int val)
+{
+	pListNodeI pNew = (pListNodeI)malloc(sizeof(ListNodeI));
+	while (site--)
+	{
+		pHead = pHead->next;
+	}
+	pNew->val = val;
+	pNew->next = pHead->next;
+	pHead->next = pNew;
+	return true;
+}
+int FunlistNode::length_list(pListNodeI pHead)
+{
+	int i = 0;
+	while (pHead->next != nullptr)
+	{
+		i++;
+		pHead = pHead->next;
+	}
+	return i;
+}
+bool FunlistNode::is_empty(pListNodeI pHead)
+{
+	if (pHead->next == nullptr)
+	{
+		return true;
+	}
+	return false;
+}
+void FunlistNode::traverse_list(pListNodeI pHead)
+{
+	while (pHead->next != nullptr)
+	{
+		pHead = pHead->next;
+		std::cout << pHead->val << " ";
+	}
+	std::cout << std::endl;
+}
+pListNodeI FunlistNode::creatlist(int n)
+{
+	int num = 0;
+	pListNodeI pHead = (pListNodeI)malloc(sizeof(ListNodeI));
+	auto pTail = pHead;
+	if (pHead == nullptr)
+	{
+		std::cout << "申请失败：";
+		exit(-1);
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		std::cin >> num;
+		pListNodeI pNew = (pListNodeI)malloc(sizeof(ListNodeI));
+		pNew->val = num;
+		pTail->next = pNew;
+		pNew->next = nullptr;
+		pTail = pNew;
+	}
+	return pHead;
+}
